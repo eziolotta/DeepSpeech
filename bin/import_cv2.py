@@ -184,7 +184,7 @@ def _maybe_convert_wav(mp3_filename, wav_filename):
         try:
             #transformer.build(mp3_filename, wav_filename)
             subprocess.check_call(
-                                ['sox','-t','mp3' mp3_filename, '-r', str(SAMPLE_RATE), '-c', '1', '-b', '16', wav_filename], stderr=subprocess.STDOUT
+                                ['sox','-t','mp3', mp3_filename, '-r', str(SAMPLE_RATE), '-c', '1', '-b', '16', wav_filename], stderr=subprocess.STDOUT
                                 )
         except:# sox.core.SoxError:
             pass
