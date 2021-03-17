@@ -179,11 +179,14 @@ def _preprocess_data(tsv_dir, audio_dir, space_after_every_character=False):
 
 def _maybe_convert_wav(mp3_filename, wav_filename):
     if not os.path.exists(wav_filename):
-        transformer = sox.Transformer()
-        transformer.convert(samplerate=SAMPLE_RATE, n_channels=CHANNELS)
+        #transformer = sox.Transformer()
+        #transformer.convert(samplerate=SAMPLE_RATE, n_channels=CHANNELS)
         try:
-            transformer.build(mp3_filename, wav_filename)
-        except sox.core.SoxError:
+            #transformer.build(mp3_filename, wav_filename)
+            subprocess.check_call(
+                                ['sox','-t','mp3' mp3_filename, '-r', str(SAMPLE_RATE), '-c', '1', '-b', '16', wav_filename], stderr=subprocess.STDOUT
+                                )
+        except:# sox.core.SoxError:
             pass
 
 
