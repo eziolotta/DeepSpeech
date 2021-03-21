@@ -67,11 +67,20 @@ def one_sample(sample):
     frames = 0
     if os.path.exists(wav_filename):
         file_size = os.path.getsize(wav_filename)
-        frames = int(
-            subprocess.check_output(
-                ["soxi", "-s", wav_filename], stderr=subprocess.STDOUT
+        ##fix ezio
+        try:
+            frames = int(
+                subprocess.check_output(
+                    ["soxi", "-s", wav_filename], stderr=subprocess.STDOUT
+                )
             )
-        )
+        except:
+            print('soxi error , get frame from size: {}'.format(wav_filename))
+            BITDEPTH = 16
+            duration = file_size /(SAMPLE_RATE * CHANNELS * BITDEPTH/8 )
+            frames = duration * SAMPLE_RATE
+
+
     label = FILTER_OBJ.filter(sample[1])
     rows = []
     counter = get_counter()
